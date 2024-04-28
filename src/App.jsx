@@ -1,25 +1,121 @@
-import { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import {Suspense} from 'react';
+import {Canvas} from '@react-three/fiber';
 import Panorama from './components/Panorama';
 import Controls from './components/Controls';
 import Helicopter from './components/Helicopter';
+import {useRef} from 'react';
+import {Parallax, ParallaxLayer} from '@react-spring/parallax';
 import './App.css';
 
+const url = (name, wrap = false) =>
+    `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
+
 export default function App() {
-  return (
-      <div id='Canvas-container'>
-          <Canvas>
-              <Controls/>
-              <Suspense fallback={null}>
-                  <Panorama/>
-                  <Helicopter/>
-              </Suspense>
+    const parallax = useRef(null); // Removed type annotation
+    return (
+        <div id='Page-container'>
+            <Parallax ref={parallax} pages={3}>
 
-              <ambientLight intensity={0.5}/>
+                {/* Start of Background */}
+                <ParallaxLayer offset={1} speed={0} factor={2} style={{backgroundColor: '#87BCDE', opacity: 0.5}}/>
+                <ParallaxLayer offset={2} speed={0} factor={2} style={{backgroundColor: '#87BCDE'}}/>
 
-              <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1}/>
-              <pointLight position={[-10, -10, -10]}/>
-          </Canvas>
-      </div>
-  )
+                <ParallaxLayer
+                    offset={0}
+                    speed={0}
+                    factor={3}
+                    style={{
+                        backgroundImage: url('stars', true),
+                        backgroundSize: 'cover',
+                    }}
+                />
+
+                <ParallaxLayer offset={1} speed={0.8} style={{opacity: 0.1}}>
+                    <img src={url('cloud')} style={{display: 'block', width: '20%', marginLeft: '55%'}}/>
+                    <img src={url('cloud')} style={{display: 'block', width: '10%', marginLeft: '15%'}}/>
+                </ParallaxLayer>
+
+                <ParallaxLayer offset={1.75} speed={0.5} style={{opacity: 0.1}}>
+                    <img src={url('cloud')} style={{display: 'block', width: '20%', marginLeft: '70%'}}/>
+                    <img src={url('cloud')} style={{display: 'block', width: '20%', marginLeft: '40%'}}/>
+                </ParallaxLayer>
+
+                <ParallaxLayer offset={1} speed={0.2} style={{opacity: 0.2}}>
+                    <img src={url('cloud')} style={{display: 'block', width: '10%', marginLeft: '10%'}}/>
+                    <img src={url('cloud')} style={{display: 'block', width: '20%', marginLeft: '75%'}}/>
+                </ParallaxLayer>
+
+                <ParallaxLayer offset={1.6} speed={-0.1} style={{opacity: 0.4}}>
+                    <img src={url('cloud')} style={{display: 'block', width: '20%', marginLeft: '60%'}}/>
+                    <img src={url('cloud')} style={{display: 'block', width: '25%', marginLeft: '30%'}}/>
+                    <img src={url('cloud')} style={{display: 'block', width: '10%', marginLeft: '80%'}}/>
+                </ParallaxLayer>
+
+                <ParallaxLayer offset={2.6} speed={0.4} style={{opacity: 0.6}}>
+                    <img src={url('cloud')} style={{display: 'block', width: '20%', marginLeft: '5%'}}/>
+                    <img src={url('cloud')} style={{display: 'block', width: '15%', marginLeft: '75%'}}/>
+                </ParallaxLayer>
+
+                <ParallaxLayer
+                    offset={2.8}
+                    speed={-0.3}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        pointerEvents: 'none',
+                    }}>
+                    <img src={url('earth')} style={{width: '60%'}}/>
+                </ParallaxLayer>
+                {/* End of Background */}
+
+
+
+
+                {/* Start of Title */}
+                <ParallaxLayer sticky={{ start: 0.2, end: 1.7 }}  style={{justifyContent: 'flex-start' }}>
+                    <div style={{
+                        textAlign: 'center',
+                        // textTransform: 'uppercase',
+                        fontWeight: 800,
+                        display: "flex",
+                        alignItems: "center",
+                        color: 'white',
+                        justifyContent: "center",
+                        fontSize: '4em',
+                        padding: '0 0',
+                        margin: '0 0',
+                        // backgroundColor: "#ff6d6d"
+                    }}>
+                        <p style={{
+                        }}>Parallax Example</p>
+                    </div>
+                </ParallaxLayer>
+                {/* End of Title */}
+
+
+                <ParallaxLayer sticky={{ start: 1, end: 1.7 }} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    pointerEvents: 'none',
+                }}>
+                    <div id='Canvas-container' >
+                        <Canvas>
+                            <Controls/>
+                            <Suspense fallback={null}>
+                                <Panorama/>
+                                <Helicopter/>
+                            </Suspense>
+
+                            <ambientLight intensity={0.5}/>
+
+                            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1}/>
+                            <pointLight position={[-10, -10, -10]}/>
+                        </Canvas>
+                    </div>
+                </ParallaxLayer>
+            </Parallax>
+        </div>
+    )
 }
