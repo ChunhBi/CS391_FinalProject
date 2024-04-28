@@ -1,35 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import Panorama from './components/Panorama';
+import Controls from './components/Controls';
+import Helicopter from './components/Helicopter';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div id='Canvas-container'>
+          <Canvas>
+              <Controls/>
+              <Suspense fallback={null}>
+                  <Panorama/>
+                  <Helicopter/>
+              </Suspense>
+
+              <ambientLight intensity={0.5}/>
+
+              <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1}/>
+              <pointLight position={[-10, -10, -10]}/>
+          </Canvas>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
   )
 }
-
-export default App
