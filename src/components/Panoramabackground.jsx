@@ -22,7 +22,7 @@ const backgrounds = [
     },
 ];
 
-export default function Panorama() {
+export default function Panoramabackground() {
     const [activeBackground, setActiveBackground] = useState(1);
     const [userImage, setUserImage] = useState(null);
     const { url } = backgrounds.find(({ id }) => id === activeBackground);

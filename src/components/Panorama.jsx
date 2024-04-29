@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo} from 'react';
 import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 import Box from './Box.jsx';
@@ -23,10 +23,17 @@ const backgrounds = [
 ];
 
 export default function Panorama({ userImage }) {
+    const [selectImage, setSelectImage] = useState(userImage); 
+    console.log("Loading texture with URL:", userImage);
     const [activeBackground, setActiveBackground] = useState(1);
     // const { url } = backgrounds.find(({ id }) => id === activeBackground);
-    const { url } = userImage ? userImage : backgrounds.find(({ id }) => id === activeBackground);
+    // const { url } = userImage ? userImage : backgrounds.find(({ id }) => id === activeBackground);
+    const url = useMemo(() => {
+        return userImage || backgrounds.find(({ id }) => id === activeBackground).url;
+    }, [userImage, activeBackground]);
     const background = useLoader(THREE.TextureLoader, url);
+    const abc = selectImage? selectImage : './skyscraper.jpg'
+    const texture = useLoader(THREE.TextureLoader, abc);
 
     // function getActiveBackground() {
     //     var currentId = activeBackground + 1

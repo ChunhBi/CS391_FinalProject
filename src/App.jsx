@@ -1,12 +1,14 @@
 import {Suspense} from 'react';
 import {Canvas} from '@react-three/fiber';
 import Panorama from './components/Panorama';
+import Panoramabackground from './components/Panoramabackground';
 import Controls from './components/Controls';
 import Helicopter from './components/Helicopter';
 import {useRef} from 'react';
 import {Parallax, ParallaxLayer} from '@react-spring/parallax';
 import './App.css';
 import {styled} from 'styled-components';
+import { useState } from 'react';
 
 const StyledDiv = styled.div`
     text-align: center;
@@ -38,14 +40,17 @@ export default function App() {
     // ================================== file change
     const handleFileChange = event => {
         const file = event.target.files[0];
-        if (file && file.type.startsWith('image/')) {
+        if (file && file.type.startsWith('image/')) {  // Ensure it's an image
+            // const objectURL = URL.createObjectURL(file);
+            // setUserImage(objectURL);
             const reader = new FileReader();
-            reader.onload = (e) => {
-                setUserImage(e.target.result);  
+            reader.onload = e => {
+                console.log("Data URL:", e.target.result);
+                setUserImage(e.target.result);
             };
             reader.readAsDataURL(file);
         } else {
-            alert('Please select an image file.');
+            console.log("Invalid file type:", file.type);
         }
     };
     // ================================== file change
@@ -113,9 +118,14 @@ export default function App() {
                 {/*<ParallaxLayer offset={3.4} speed={0.4}>*/}
                 {/*    <StyledP style={{left: '5%', fontSize: "3em", display: "block"}}>Chunhao Bi</StyledP>*/}
                 {/*</ParallaxLayer>*/}
+                
 
+                <ParallaxLayer offset={.1} speed={0.4} style={{opacity: 0.6}}>
+                    <img src={userImage} style={{display: "block", width: '20%', marginLeft: '5%'}}/>
+                </ParallaxLayer>
+                
                 <ParallaxLayer
-                    offset={3.5}
+                    offset={0}
                     speed={-0.3}
                     style={{
                         display: 'flex',
@@ -125,7 +135,7 @@ export default function App() {
                     }}
                     onClick={() => setUserImage('./snow.jpg')}
                     >
-                    <img src={url('earth')} style={{width: '60%'}}/>
+                    <img src={'/pool.jpg'} style={{width: '60%'}}/>
                     
                 </ParallaxLayer>
                 {/* End of Background */}
@@ -153,6 +163,7 @@ export default function App() {
                             <Controls/>
                             <Suspense fallback={null}>
                                 <Panorama userImage={userImage} />
+                                {/* <Panoramabackground></Panoramabackground> */}
                                 <Helicopter/>
                             </Suspense>
 
@@ -169,13 +180,15 @@ export default function App() {
                             type="file"
                             onChange={handleFileChange}
                             accept="image/*"
-                            style={{ position: 'absolute', zIndex: 10 }}  // Ensure the input is visible and accessible
+                            style={{ position: 'absolute', zIndex: 10, pointerEvents: 'auto' }}  // Ensure the input is visible and accessible
                         />
+                        <img src={userImage} alt="Preview" />
                         {/* ========================================= */}
 
 
 
                     </div>
+                    
                     
                 </ParallaxLayer>
             </Parallax>
