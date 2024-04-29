@@ -22,18 +22,19 @@ const backgrounds = [
     },
 ];
 
-export default function Panorama() {
+export default function Panorama({ userImage }) {
     const [activeBackground, setActiveBackground] = useState(1);
-    const { url } = backgrounds.find(({ id }) => id === activeBackground);
+    // const { url } = backgrounds.find(({ id }) => id === activeBackground);
+    const { url } = userImage ? userImage : backgrounds.find(({ id }) => id === activeBackground);
     const background = useLoader(THREE.TextureLoader, url);
 
-    function getActiveBackground() {
-        var currentId = activeBackground + 1
-        if (currentId === 5) {
-            currentId = 1
-        }
-        return currentId
-    }
+    // function getActiveBackground() {
+    //     var currentId = activeBackground + 1
+    //     if (currentId === 5) {
+    //         currentId = 1
+    //     }
+    //     return currentId
+    // }
 
     return (
         <group>
@@ -45,7 +46,7 @@ export default function Panorama() {
             <group
                 onClick={(e) => {
                     e.stopPropagation();
-                    setActiveBackground(getActiveBackground());
+                    // setActiveBackground(getActiveBackground());
                 }}
             >
                 <Box />

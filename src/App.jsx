@@ -24,11 +24,34 @@ const StyledP = styled.p`
     text-align: center;
 `
 
+
+
 const url = (name, wrap = false) =>
     `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
 export default function App() {
+    const [userImage, setUserImage] = useState(null); 
     const parallax = useRef(null); // Removed type annotation
+
+
+
+    // ================================== file change
+    const handleFileChange = event => {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setUserImage(e.target.result);  
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert('Please select an image file.');
+        }
+    };
+    // ================================== file change
+
+
+
     return (
         <div id='Page-container'>
             <Parallax ref={parallax} pages={4}>
@@ -126,7 +149,7 @@ export default function App() {
                         <Canvas>
                             <Controls/>
                             <Suspense fallback={null}>
-                                <Panorama/>
+                                <Panorama userImage={userImage} />
                                 <Helicopter/>
                             </Suspense>
 
@@ -135,7 +158,22 @@ export default function App() {
                             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1}/>
                             <pointLight position={[-10, -10, -10]}/>
                         </Canvas>
+
+
+
+                        {/* ========================================= */}
+                        <input
+                            type="file"
+                            onChange={handleFileChange}
+                            accept="image/*"
+                            style={{ position: 'absolute', zIndex: 10 }}  // Ensure the input is visible and accessible
+                        />
+                        {/* ========================================= */}
+
+
+
                     </div>
+                    
                 </ParallaxLayer>
             </Parallax>
         </div>
