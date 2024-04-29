@@ -122,8 +122,11 @@ export default function App() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         pointerEvents: 'none',
-                    }}>
+                    }}
+                    onClick={() => setUserImage('./snow.jpg')}
+                    >
                     <img src={url('earth')} style={{width: '60%'}}/>
+                    
                 </ParallaxLayer>
                 {/* End of Background */}
 
