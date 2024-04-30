@@ -1,6 +1,9 @@
 
 import { useState } from 'react';
 
+
+
+
 const ModelUpload = () => {
     const [file, setFile] = useState(null);
 
@@ -15,7 +18,11 @@ const ModelUpload = () => {
         }
     };
 
+
+
+
     return (
+
         <div>
             <input type="file" accept=".obj" onChange={handleFileChange} />
             {file && <p>File ready for processing: {file.name}</p>}

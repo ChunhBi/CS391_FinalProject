@@ -192,14 +192,14 @@ export default function App() {
                                 accept="image/*"
                                 label = "image"
                                 style={{
-                                    width: '100%',  // Adjust width as needed
-                                    margin: '10px 0' // Add some vertical spacing
+                                    width: '100%',
+                                    margin: '10px 0'
                                 }}
                             />
                             <ModelUpload
                                 style={{
-                                    width: '100%',  // Adjust width as needed
-                                    margin: '10px 0' // Add some vertical spacing
+                                    width: '100%',
+                                    margin: '10px 0'
                                 }}
                             />
                         </StyledDiv2>
