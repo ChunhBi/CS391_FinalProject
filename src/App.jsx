@@ -9,7 +9,12 @@ import {Parallax, ParallaxLayer} from '@react-spring/parallax';
 import './App.css';
 import {styled} from 'styled-components';
 import { useState } from 'react';
+<<<<<<< HEAD
 import SceneComponent from './components/SceneComponent.jsx'
+=======
+import ModelUpload from "./components/ModelUpload.jsx";
+
+>>>>>>> brherold
 
 const StyledDiv = styled.div`
     text-align: center;
@@ -27,12 +32,23 @@ const StyledP = styled.p`
     text-align: center;
 `
 
+const StyledDiv2 = styled.div`
+    display: flex;
+    flex-direction: column;
+
+`
+
 
 
 const url = (name, wrap = false) =>
     `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
 export default function App() {
+<<<<<<< HEAD
+=======
+
+    const [userImage, setUserImage] = useState(null); 
+>>>>>>> brherold
     const parallax = useRef(null); // Removed type annotation
 
     return (
@@ -104,9 +120,18 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
+<<<<<<< HEAD
                         pointerEvents: 'none',
                     }}>
                     <img src={url('earth')} style={{width: '60%'}}/>
+=======
+                        pointerEvents: 'auto',
+                    }}
+                    onClick={() => setUserImage('./snow.jpg')}
+                    >
+                    <img src={'/pool.jpg'} style={{width: '60%'}}/>
+                    
+>>>>>>> brherold
                 </ParallaxLayer>
                 {/* End of Background */}
 
@@ -126,11 +151,60 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    pointerEvents: 'none',
+                    pointerEvents: 'auto',
                 }}>
+<<<<<<< HEAD
                     <SceneComponent />
+=======
+                    <div id='Canvas-container' >
+                        <Canvas>
+                            <Controls/>
+                            <Suspense fallback={null}>
+                                <Panorama userImage={userImage} />
+                                {/* <Panoramabackground></Panoramabackground> */}
+                                <Helicopter/>
+                            </Suspense>
+
+                            <ambientLight intensity={0.5}/>
+
+                            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1}/>
+                            <pointLight position={[-10, -10, -10]}/>
+                        </Canvas>
+
+
+
+                        {/* ========================================= */}
+                        <StyledDiv2>
+                            <input
+                                type="file"
+                                onChange={handleFileChange}
+                                accept="image/*"
+                                label = "image"
+                                style={{
+                                    width: '100%',
+                                    margin: '10px 0'
+                                }}
+                            />
+                            <ModelUpload
+                                style={{
+                                    width: '100%',
+                                    margin: '10px 0'
+                                }}
+                            />
+                        </StyledDiv2>
+
+
+
+                        {/* ========================================= */}
+
+
+                    </div>
+
+
+>>>>>>> brherold
                 </ParallaxLayer>
             </Parallax>
+
         </div>
     )
 }
