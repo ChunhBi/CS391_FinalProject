@@ -1,5 +1,5 @@
 import {Parallax, ParallaxLayer} from "@react-spring/parallax";
-import SceneComponent from "./SceneComponent.jsx";
+import MainSceneWrapper from "./MainSceneWrapper.jsx";
 import {styled} from "styled-components";
 import {useRef} from 'react';
 
@@ -15,8 +15,11 @@ const StyledDiv = styled.div`
 `;
 
 const StyledP = styled.p`
-    font-weight: 800;
-    text-align: center;
+    font-weight: 900;
+    font-size: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 
 const url = (name, wrap = false) =>
@@ -84,8 +87,13 @@ export default function MainPage() {
                     <img src={url('cloud')} style={{display: 'block', width: '15%', marginLeft: '75%'}}/>
                 </ParallaxLayer>
 
+                <ParallaxLayer offset={3.2} speed={1.0} style={{opacity: 0.9}}>
+                    <StyledP> Created by: </StyledP>
+                    <StyledP style={{fontSize: "2em"}}> Chunhao Bi, Fanjie Gao, Brandon Herold </StyledP>
+                </ParallaxLayer>
+
                 <ParallaxLayer
-                    offset={3.5}
+                    offset={3.8}
                     speed={-0.3}
                     style={{
                         display: 'flex',
@@ -95,13 +103,13 @@ export default function MainPage() {
                     }}>
                     <img src={url('earth')} style={{width: '60%'}}/>
                 </ParallaxLayer>
-                {/* End of Background */}
+                 {/*End of Background*/}
 
 
                 {/* Start of Title */}
                 <ParallaxLayer sticky={{start: 0.3, end: 2}} style={{justifyContent: 'flex-start'}}>
                     <StyledDiv style={{color: "white", fontSize: "4em"}}>
-                        <p>Online 3D File Reader</p>
+                        <p>Online OBJ File Reader</p>
                     </StyledDiv>
 
                 </ParallaxLayer>
@@ -114,7 +122,9 @@ export default function MainPage() {
                     justifyContent: 'center',
                     pointerEvents: 'auto',
                 }}>
-                    <SceneComponent/>
+                    <div id='Canvas-container' style={{height: "60%", width: "60%"}}>
+                        <MainSceneWrapper/>
+                    </div>
                 </ParallaxLayer>
                 {/* End of Scene */}
 
