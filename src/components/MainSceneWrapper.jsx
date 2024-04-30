@@ -1,11 +1,9 @@
 import {Canvas, useLoader} from "@react-three/fiber";
 import Controls from "./Controls.jsx";
 import {Suspense, useState} from "react";
-import Panorama from "./Panorama.jsx";
-import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader.js";
+import Scene from "./Scene.jsx";
 
-
-export default function SceneComponent() {
+export default function MainSceneWrapper() {
     const [userImage, setUserImage] = useState(null);
     const [userObj, setUserObj] = useState(null);
 
@@ -27,7 +25,7 @@ export default function SceneComponent() {
 
     const handleObjFileChange = (event) => {
         const uploadedFile = event.target.files[0];
-        if (uploadedFile && uploadedFile.name.endsWith('.obj')) {
+        if (uploadedFile.name.endsWith('.obj')) {
             const reader = new FileReader();
             reader.onload = e => {
                 console.log("Data URL:", e.target.result);
@@ -41,11 +39,11 @@ export default function SceneComponent() {
 
 
     return (
-        <div id='Canvas-container' style={{height: "60%", width: "60%"}}>
+        <>
             <Canvas>
                 <Controls/>
                 <Suspense fallback={null}>
-                    <Panorama userImage={userImage} obj={userObj} />
+                    <Scene userImage={userImage} obj={userObj} />
                     {/* <Panoramabackground></Panoramabackground> */}
                 </Suspense>
 
@@ -70,6 +68,6 @@ export default function SceneComponent() {
                 onChange={handleObjFileChange}
                 accept=".obj"
             />
-        </div>
+        </>
     )
 }

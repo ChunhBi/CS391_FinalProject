@@ -12,7 +12,7 @@ const backgrounds = [
     },
 ];
 
-export default function Panorama({ userImage, obj }) {
+export default function Scene({ userImage, obj }) {
     const url = useMemo(() => {
         return userImage || backgrounds.find(({ id }) => id === 1).url;
     }, [userImage]);
