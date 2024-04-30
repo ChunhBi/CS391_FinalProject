@@ -1,14 +1,15 @@
-import {Suspense} from 'react';
-import {Canvas} from '@react-three/fiber';
-import Panorama from './components/Panorama';
-import Panoramabackground from './components/Panoramabackground';
-import Controls from './components/Controls';
-import Helicopter from './components/Helicopter';
+// import {Suspense} from 'react';
+// import {Canvas} from '@react-three/fiber';
+// import Panorama from './components/Panorama';
+// import Panoramabackground from './components/Panoramabackground';
+// import Controls from './components/Controls';
+// import Helicopter from './components/Helicopter';
 import {useRef} from 'react';
 import {Parallax, ParallaxLayer} from '@react-spring/parallax';
 import './App.css';
 import {styled} from 'styled-components';
 import { useState } from 'react';
+import SceneComponent from './components/SceneComponent.jsx'
 
 const StyledDiv = styled.div`
     text-align: center;
@@ -32,33 +33,10 @@ const url = (name, wrap = false) =>
     `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
 export default function App() {
-    const [userImage, setUserImage] = useState(null); 
     const parallax = useRef(null); // Removed type annotation
 
-
-
-    // ================================== file change
-    const handleFileChange = event => {
-        const file = event.target.files[0];
-        if (file && file.type.startsWith('image/')) {  // Ensure it's an image
-            // const objectURL = URL.createObjectURL(file);
-            // setUserImage(objectURL);
-            const reader = new FileReader();
-            reader.onload = e => {
-                console.log("Data URL:", e.target.result);
-                setUserImage(e.target.result);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            console.log("Invalid file type:", file.type);
-        }
-    };
-    // ================================== file change
-
-
-
     return (
-        <div id='Page-container'>
+        <div id='Page-container' style={{height: "100%", width: "100%", background: "#253237"}}>
             <Parallax ref={parallax} pages={4}>
 
                 {/* Start of Background */}
@@ -118,25 +96,17 @@ export default function App() {
                 {/*<ParallaxLayer offset={3.4} speed={0.4}>*/}
                 {/*    <StyledP style={{left: '5%', fontSize: "3em", display: "block"}}>Chunhao Bi</StyledP>*/}
                 {/*</ParallaxLayer>*/}
-                
 
-                <ParallaxLayer offset={.1} speed={0.4} style={{opacity: 0.6}}>
-                    <img src={userImage} style={{display: "block", width: '20%', marginLeft: '5%'}}/>
-                </ParallaxLayer>
-                
                 <ParallaxLayer
-                    offset={0}
+                    offset={3.5}
                     speed={-0.3}
                     style={{
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         pointerEvents: 'none',
-                    }}
-                    onClick={() => setUserImage('./snow.jpg')}
-                    >
-                    <img src={'/pool.jpg'} style={{width: '60%'}}/>
-                    
+                    }}>
+                    <img src={url('earth')} style={{width: '60%'}}/>
                 </ParallaxLayer>
                 {/* End of Background */}
 
@@ -158,38 +128,7 @@ export default function App() {
                     justifyContent: 'center',
                     pointerEvents: 'none',
                 }}>
-                    <div id='Canvas-container' >
-                        <Canvas>
-                            <Controls/>
-                            <Suspense fallback={null}>
-                                <Panorama userImage={userImage} />
-                                {/* <Panoramabackground></Panoramabackground> */}
-                                <Helicopter/>
-                            </Suspense>
-
-                            <ambientLight intensity={0.5}/>
-
-                            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1}/>
-                            <pointLight position={[-10, -10, -10]}/>
-                        </Canvas>
-
-
-
-                        {/* ========================================= */}
-                        <input
-                            type="file"
-                            onChange={handleFileChange}
-                            accept="image/*"
-                            style={{ position: 'absolute', zIndex: 10, pointerEvents: 'auto' }}  // Ensure the input is visible and accessible
-                        />
-                        <img src={userImage} alt="Preview" />
-                        {/* ========================================= */}
-
-
-
-                    </div>
-                    
-                    
+                    <SceneComponent />
                 </ParallaxLayer>
             </Parallax>
         </div>
