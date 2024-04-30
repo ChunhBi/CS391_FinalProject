@@ -1,7 +1,9 @@
-import {Canvas} from "@react-three/fiber";
+import {Canvas, useLoader} from "@react-three/fiber";
 import Controls from "./Controls.jsx";
 import {Suspense, useState} from "react";
 import Panorama from "./Panorama.jsx";
+import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader.js";
+
 
 export default function SceneComponent() {
     const [userImage, setUserImage] = useState(null);
@@ -26,9 +28,12 @@ export default function SceneComponent() {
     const handleObjFileChange = (event) => {
         const uploadedFile = event.target.files[0];
         if (uploadedFile && uploadedFile.name.endsWith('.obj')) {
-            setUserObj(uploadedFile);
-            // Optionally, you can read the file or send it to a server here
-            console.log('File uploaded:', uploadedFile.name);
+            const reader = new FileReader();
+            reader.onload = e => {
+                console.log("Data URL:", e.target.result);
+                setUserObj(e.target.result);
+            };
+            reader.readAsDataURL(uploadedFile);
         } else {
             console.error('Please upload a valid .obj file.');
         }
@@ -40,7 +45,7 @@ export default function SceneComponent() {
             <Canvas>
                 <Controls/>
                 <Suspense fallback={null}>
-                    <Panorama userImage={userImage}/>
+                    <Panorama userImage={userImage} obj={userObj} />
                     {/* <Panoramabackground></Panoramabackground> */}
                 </Suspense>
 
@@ -52,21 +57,19 @@ export default function SceneComponent() {
 
 
             {/* ========================================= */}
-            <p style={{display: "inline"}}>Upload Image: </p>
+            <p style={{display: "inline"}}>Upload Background: </p>
             <input
                 type="file"
                 onChange={handleFileChange}
                 accept="image/*"
-                 // Ensure the input is visible and accessible
             />
 
-            <div>
-                <input
-                    type="file"
-                    accept=".obj"
-                    onChange={handleObjFileChange} />
-
-            </div>
+            <p style={{display: "inline"}}>Upload Obj: </p>
+            <input
+                type="file"
+                onChange={handleObjFileChange}
+                accept=".obj"
+            />
         </div>
     )
 }
