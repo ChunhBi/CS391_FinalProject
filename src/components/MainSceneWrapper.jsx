@@ -1,11 +1,9 @@
-import { Canvas } from "@react-three/fiber";
-import { Suspense, useState } from "react";
+import {Canvas, useLoader} from "@react-three/fiber";
 import Controls from "./Controls.jsx";
-import Panorama from "./Panorama.jsx";
-import Model from "./Model.jsx";
+import {Suspense, useState} from "react";
+import Scene from "./Scene.jsx";
 
-
-export default function SceneComponent() {
+export default function MainSceneWrapper() {
     const [userImage, setUserImage] = useState(null);
     const [userObj, setUserObj] = useState(null);
 
@@ -15,11 +13,11 @@ export default function SceneComponent() {
             // const objectURL = URL.createObjectURL(file);
             // setUserImage(objectURL);
             const reader = new FileReader();
-            reader.onload = e => { // trigger when the file is read
+            reader.onload = e => {
                 console.log("Data URL:", e.target.result);
                 setUserImage(e.target.result);
             };
-            reader.readAsDataURL(file); // read file
+            reader.readAsDataURL(file);
         } else {
             console.log("Invalid file type:", file.type);
         }
@@ -27,13 +25,13 @@ export default function SceneComponent() {
 
     const handleObjFileChange = (event) => {
         const uploadedFile = event.target.files[0];
-        if (uploadedFile && uploadedFile.name.endsWith('.obj')) {  // Ensure it's an obj file
+        if (uploadedFile.name.endsWith('.obj')) {
             const reader = new FileReader();
-            reader.onload = e => { // trigger when the file is read
+            reader.onload = e => {
                 console.log("Data URL:", e.target.result);
                 setUserObj(e.target.result);
             };
-            reader.readAsDataURL(uploadedFile); // read file
+            reader.readAsDataURL(uploadedFile);
         } else {
             console.error('Please upload a valid .obj file.');
         }
@@ -41,12 +39,12 @@ export default function SceneComponent() {
 
 
     return (
-        <div id='Canvas-container' style={{height: "60%", width: "60%"}}>
+        <>
             <Canvas>
                 <Controls/>
                 <Suspense fallback={null}>
-                    <Panorama userImage={userImage}/>
-                    <Model obj={userObj}/>
+                    <Scene userImage={userImage} obj={userObj} />
+                    {/* <Panoramabackground></Panoramabackground> */}
                 </Suspense>
 
                 <ambientLight intensity={0.5}/>
@@ -55,6 +53,8 @@ export default function SceneComponent() {
                 <pointLight position={[-10, -10, -10]}/>
             </Canvas>
 
+
+            {/* ========================================= */}
             <p style={{display: "inline"}}>Upload Background: </p>
             <input
                 type="file"
@@ -68,6 +68,6 @@ export default function SceneComponent() {
                 onChange={handleObjFileChange}
                 accept=".obj"
             />
-        </div>
+        </>
     )
 }
