@@ -2,10 +2,10 @@ import {Canvas} from "@react-three/fiber";
 import Controls from "./Controls.jsx";
 import {Suspense, useState} from "react";
 import Panorama from "./Panorama.jsx";
-import Helicopter from "./Helicopter.jsx";
 
 export default function SceneComponent() {
     const [userImage, setUserImage] = useState(null);
+    const [userObj, setUserObj] = useState(null);
 
     const handleFileChange = event => {
         const file = event.target.files[0];
@@ -23,6 +23,18 @@ export default function SceneComponent() {
         }
     };
 
+    const handleObjFileChange = (event) => {
+        const uploadedFile = event.target.files[0];
+        if (uploadedFile && uploadedFile.name.endsWith('.obj')) {
+            setUserObj(uploadedFile);
+            // Optionally, you can read the file or send it to a server here
+            console.log('File uploaded:', uploadedFile.name);
+        } else {
+            console.error('Please upload a valid .obj file.');
+        }
+    };
+
+
     return (
         <div id='Canvas-container' style={{height: "60%", width: "60%"}}>
             <Canvas>
@@ -30,7 +42,6 @@ export default function SceneComponent() {
                 <Suspense fallback={null}>
                     <Panorama userImage={userImage}/>
                     {/* <Panoramabackground></Panoramabackground> */}
-                    <Helicopter/>
                 </Suspense>
 
                 <ambientLight intensity={0.5}/>
@@ -41,18 +52,21 @@ export default function SceneComponent() {
 
 
             {/* ========================================= */}
+            <p style={{display: "inline"}}>Upload Image: </p>
             <input
                 type="file"
                 onChange={handleFileChange}
                 accept="image/*"
-                style={{
-                    position: 'absolute',
-                    zIndex: 10,
-                    pointerEvents: 'auto'
-                }}  // Ensure the input is visible and accessible
+                 // Ensure the input is visible and accessible
             />
-            <img src={userImage} alt="Preview"/>
-            {/* ========================================= */}
+
+            <div>
+                <input
+                    type="file"
+                    accept=".obj"
+                    onChange={handleObjFileChange} />
+
+            </div>
         </div>
     )
 }

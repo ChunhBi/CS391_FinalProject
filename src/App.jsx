@@ -1,16 +1,11 @@
-// import {Suspense} from 'react';
-// import {Canvas} from '@react-three/fiber';
-// import Panorama from './components/Panorama';
-// import Panoramabackground from './components/Panoramabackground';
-// import Controls from './components/Controls';
-// import Helicopter from './components/Helicopter';
+
 import {useRef} from 'react';
 import {Parallax, ParallaxLayer} from '@react-spring/parallax';
 import './App.css';
 import {styled} from 'styled-components';
-import { useState } from 'react';
 import Title from './components/Title';
 import SceneComponent from './components/SceneComponent.jsx'
+import {Canvas} from "@react-three/fiber";
 
 const StyledDiv = styled.div`
     text-align: center;
@@ -94,9 +89,6 @@ export default function App() {
                     <img src={url('cloud')} style={{display: "block", width: '20%', marginLeft: '5%'}}/>
                     <img src={url('cloud')} style={{display: 'block', width: '15%', marginLeft: '75%'}}/>
                 </ParallaxLayer>
-                {/*<ParallaxLayer offset={3.4} speed={0.4}>*/}
-                {/*    <StyledP style={{left: '5%', fontSize: "3em", display: "block"}}>Chunhao Bi</StyledP>*/}
-                {/*</ParallaxLayer>*/}
 
                 <ParallaxLayer
                     offset={3.5}
@@ -117,10 +109,10 @@ export default function App() {
                 {/* Start of Title */}
                 <ParallaxLayer sticky={{ start: 0.3, end: 2 }}  style={{justifyContent: 'flex-start' }}>
                     <StyledDiv style={{color: "white", fontSize: "4em"}}>
-                        {/* <p>Online 3D File Reader</p> */}
-                        <Canvas>
-                        <Title></Title>
-                        </Canvas>
+                         <p>Online 3D File Reader</p>
+                        {/*<Canvas>*/}
+                        {/*    <Title></Title>*/}
+                        {/*</Canvas>*/}
                     </StyledDiv>
                     
                 </ParallaxLayer>
@@ -131,7 +123,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    pointerEvents: 'none',
+                    pointerEvents: 'auto',
                 }}>
                     <SceneComponent />
                 </ParallaxLayer>
