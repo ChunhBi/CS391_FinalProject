@@ -1,12 +1,15 @@
-import {Suspense} from 'react';
-import {Canvas} from '@react-three/fiber';
-import Panorama from './components/Panorama';
-import Controls from './components/Controls';
-import Helicopter from './components/Helicopter';
+// import {Suspense} from 'react';
+// import {Canvas} from '@react-three/fiber';
+// import Panorama from './components/Panorama';
+// import Panoramabackground from './components/Panoramabackground';
+// import Controls from './components/Controls';
+// import Helicopter from './components/Helicopter';
 import {useRef} from 'react';
 import {Parallax, ParallaxLayer} from '@react-spring/parallax';
 import './App.css';
 import {styled} from 'styled-components';
+import { useState } from 'react';
+import SceneComponent from './components/SceneComponent.jsx'
 
 const StyledDiv = styled.div`
     text-align: center;
@@ -24,13 +27,16 @@ const StyledP = styled.p`
     text-align: center;
 `
 
+
+
 const url = (name, wrap = false) =>
     `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
 export default function App() {
     const parallax = useRef(null); // Removed type annotation
+
     return (
-        <div id='Page-container'>
+        <div id='Page-container' style={{height: "100%", width: "100%", background: "#253237"}}>
             <Parallax ref={parallax} pages={4}>
 
                 {/* Start of Background */}
@@ -122,20 +128,7 @@ export default function App() {
                     justifyContent: 'center',
                     pointerEvents: 'none',
                 }}>
-                    <div id='Canvas-container' >
-                        <Canvas>
-                            <Controls/>
-                            <Suspense fallback={null}>
-                                <Panorama/>
-                                <Helicopter/>
-                            </Suspense>
-
-                            <ambientLight intensity={0.5}/>
-
-                            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1}/>
-                            <pointLight position={[-10, -10, -10]}/>
-                        </Canvas>
-                    </div>
+                    <SceneComponent />
                 </ParallaxLayer>
             </Parallax>
         </div>
