@@ -9,6 +9,7 @@ import {Parallax, ParallaxLayer} from '@react-spring/parallax';
 import './App.css';
 import {styled} from 'styled-components';
 import { useState } from 'react';
+import Title from './components/Title';
 
 const StyledDiv = styled.div`
     text-align: center;
@@ -131,7 +132,7 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        pointerEvents: 'none',
+                        // pointerEvents: 'none',
                     }}
                     onClick={() => setUserImage('./snow.jpg')}
                     >
@@ -146,8 +147,12 @@ export default function App() {
                 {/* Start of Title */}
                 <ParallaxLayer sticky={{ start: 0.3, end: 2 }}  style={{justifyContent: 'flex-start' }}>
                     <StyledDiv style={{color: "white", fontSize: "4em"}}>
-                        <p>Online 3D File Reader</p>
+                        {/* <p>Online 3D File Reader</p> */}
+                        <Canvas>
+                        <Title></Title>
+                        </Canvas>
                     </StyledDiv>
+                    
                 </ParallaxLayer>
                 {/* End of Title */}
 
@@ -165,6 +170,9 @@ export default function App() {
                                 <Panorama userImage={userImage} />
                                 {/* <Panoramabackground></Panoramabackground> */}
                                 <Helicopter/>
+                                {[...Array(count)].map((_, index) => (
+                                    <Helicopter key={index} userMovingObject={null}/>  
+                                ))}
                             </Suspense>
 
                             <ambientLight intensity={0.5}/>
@@ -176,13 +184,15 @@ export default function App() {
 
 
                         {/* ========================================= */}
-                        <input
+                        {/* <input
                             type="file"
                             onChange={handleFileChange}
                             accept="image/*"
                             style={{ position: 'absolute', zIndex: 10, pointerEvents: 'auto' }}  // Ensure the input is visible and accessible
-                        />
-                        <img src={userImage} alt="Preview" />
+                        /> */}
+                        {/* <img src={userImage} alt="Preview" /> */}
+
+                        <button onClick={addItem} style={{ position: 'absolute', zIndex: 10, pointerEvents: 'auto' }}>Add Item</button>
                         {/* ========================================= */}
 
 
