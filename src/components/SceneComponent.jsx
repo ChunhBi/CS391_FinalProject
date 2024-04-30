@@ -1,8 +1,7 @@
-import {Canvas, useLoader} from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
+import { Suspense, useState } from "react";
 import Controls from "./Controls.jsx";
-import {Suspense, useState} from "react";
 import Panorama from "./Panorama.jsx";
-import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader.js";
 
 
 export default function SceneComponent() {
@@ -15,11 +14,11 @@ export default function SceneComponent() {
             // const objectURL = URL.createObjectURL(file);
             // setUserImage(objectURL);
             const reader = new FileReader();
-            reader.onload = e => {
+            reader.onload = e => { // trigger when the file is read
                 console.log("Data URL:", e.target.result);
                 setUserImage(e.target.result);
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file); // read file
         } else {
             console.log("Invalid file type:", file.type);
         }
@@ -27,13 +26,13 @@ export default function SceneComponent() {
 
     const handleObjFileChange = (event) => {
         const uploadedFile = event.target.files[0];
-        if (uploadedFile && uploadedFile.name.endsWith('.obj')) {
+        if (uploadedFile && uploadedFile.name.endsWith('.obj')) {  // Ensure it's an obj file
             const reader = new FileReader();
-            reader.onload = e => {
+            reader.onload = e => { // trigger when the file is read
                 console.log("Data URL:", e.target.result);
                 setUserObj(e.target.result);
             };
-            reader.readAsDataURL(uploadedFile);
+            reader.readAsDataURL(uploadedFile); // read file
         } else {
             console.error('Please upload a valid .obj file.');
         }
@@ -46,7 +45,6 @@ export default function SceneComponent() {
                 <Controls/>
                 <Suspense fallback={null}>
                     <Panorama userImage={userImage} obj={userObj} />
-                    {/* <Panoramabackground></Panoramabackground> */}
                 </Suspense>
 
                 <ambientLight intensity={0.5}/>
@@ -55,8 +53,6 @@ export default function SceneComponent() {
                 <pointLight position={[-10, -10, -10]}/>
             </Canvas>
 
-
-            {/* ========================================= */}
             <p style={{display: "inline"}}>Upload Background: </p>
             <input
                 type="file"

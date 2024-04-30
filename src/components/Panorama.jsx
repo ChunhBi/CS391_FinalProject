@@ -6,7 +6,7 @@ import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader.js";
 const backgrounds = [
     {
         id: 1,
-        url: './sea.jpg',
+        url: './sea.jpg', // default image
     },
 ];
 
