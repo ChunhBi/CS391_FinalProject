@@ -9,6 +9,8 @@ import {Parallax, ParallaxLayer} from '@react-spring/parallax';
 import './App.css';
 import {styled} from 'styled-components';
 import { useState } from 'react';
+import ModelUpload from "./components/ModelUpload.jsx";
+
 
 const StyledDiv = styled.div`
     text-align: center;
@@ -26,12 +28,19 @@ const StyledP = styled.p`
     text-align: center;
 `
 
+const StyledDiv2 = styled.div`
+    display: flex;
+    flex-direction: column;
+
+`
+
 
 
 const url = (name, wrap = false) =>
     `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
 export default function App() {
+
     const [userImage, setUserImage] = useState(null); 
     const parallax = useRef(null); // Removed type annotation
 
@@ -131,7 +140,7 @@ export default function App() {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        pointerEvents: 'none',
+                        pointerEvents: 'auto',
                     }}
                     onClick={() => setUserImage('./snow.jpg')}
                     >
@@ -156,7 +165,7 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    pointerEvents: 'none',
+                    pointerEvents: 'auto',
                 }}>
                     <div id='Canvas-container' >
                         <Canvas>
@@ -176,22 +185,36 @@ export default function App() {
 
 
                         {/* ========================================= */}
-                        <input
-                            type="file"
-                            onChange={handleFileChange}
-                            accept="image/*"
-                            style={{ position: 'absolute', zIndex: 10, pointerEvents: 'auto' }}  // Ensure the input is visible and accessible
-                        />
-                        <img src={userImage} alt="Preview" />
+                        <StyledDiv2>
+                            <input
+                                type="file"
+                                onChange={handleFileChange}
+                                accept="image/*"
+                                label = "image"
+                                style={{
+                                    width: '100%',  // Adjust width as needed
+                                    margin: '10px 0' // Add some vertical spacing
+                                }}
+                            />
+                            <ModelUpload
+                                style={{
+                                    width: '100%',  // Adjust width as needed
+                                    margin: '10px 0' // Add some vertical spacing
+                                }}
+                            />
+                        </StyledDiv2>
+
+
+
                         {/* ========================================= */}
 
 
-
                     </div>
-                    
-                    
+
+
                 </ParallaxLayer>
             </Parallax>
+
         </div>
     )
 }
