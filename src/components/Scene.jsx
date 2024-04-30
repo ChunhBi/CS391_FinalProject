@@ -1,5 +1,3 @@
-
-
 import { useMemo, useState } from 'react';
 import { useLoader, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -12,6 +10,8 @@ const backgrounds = [
     },
 ];
 
+// Scene that contains model inspection
+// Reponsible: Brandon Herold
 export default function Scene({ userImage, obj }) {
     const url = useMemo(() => {
         return userImage || backgrounds.find(({ id }) => id === 1).url;
@@ -28,7 +28,6 @@ export default function Scene({ userImage, obj }) {
 
     {/* Handles the Scroll wheel for changing the y0ffset*/}
     const handleWheel = (event) => {
-
         setYOffset((prev) => prev + event.deltaY * 0.01);
     };
 
@@ -36,7 +35,6 @@ export default function Scene({ userImage, obj }) {
     useMemo(() => {
         const canvas = gl.domElement;
         canvas.addEventListener('wheel', handleWheel);
-
 
         return () => canvas.removeEventListener('wheel', handleWheel);
     }, [gl.domElement]);

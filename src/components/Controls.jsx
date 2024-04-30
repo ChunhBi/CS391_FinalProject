@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useThree } from '@react-three/fiber';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+// control copied from mp6
 export default function Controls() {
     const { camera, gl } = useThree();
 

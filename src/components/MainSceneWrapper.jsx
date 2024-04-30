@@ -3,6 +3,8 @@ import Controls from "./Controls.jsx";
 import {Suspense, useState} from "react";
 import Scene from "./Scene.jsx";
 
+// Main Scene Wrapper that contains the scene component and two file upload buttons,
+// Responsible: Fanjie Gao
 export default function MainSceneWrapper() {
     const [userImage, setUserImage] = useState(null);
     const [userObj, setUserObj] = useState(null);
@@ -10,8 +12,6 @@ export default function MainSceneWrapper() {
     const handleFileChange = event => {
         const file = event.target.files[0];
         if (file && file.type.startsWith('image/')) {  // Ensure it's an image
-            // const objectURL = URL.createObjectURL(file);
-            // setUserImage(objectURL);
             const reader = new FileReader();
             reader.onload = e => {
                 console.log("Data URL:", e.target.result);

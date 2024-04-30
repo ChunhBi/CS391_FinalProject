@@ -25,6 +25,8 @@ const StyledP = styled.p`
 const url = (name, wrap = false) =>
     `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`;
 
+// Mainpage that wraps the title, background, scene, credits etc.
+// Responsible: Chunhao Bi
 export default function MainPage() {
     const parallax = useRef(null); // Removed type annotation
 
@@ -87,10 +89,13 @@ export default function MainPage() {
                     <img src={url('cloud')} style={{display: 'block', width: '15%', marginLeft: '75%'}}/>
                 </ParallaxLayer>
 
+                {/*Start of credit*/}
                 <ParallaxLayer offset={3.2} speed={1.0} style={{opacity: 0.9}}>
                     <StyledP> Created by: </StyledP>
                     <StyledP style={{fontSize: "2em"}}> Chunhao Bi, Fanjie Gao, Brandon Herold </StyledP>
                 </ParallaxLayer>
+                {/*End of credit*/}
+
 
                 <ParallaxLayer
                     offset={3.8}
