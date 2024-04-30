@@ -2,6 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense, useState } from "react";
 import Controls from "./Controls.jsx";
 import Panorama from "./Panorama.jsx";
+import Model from "./Model.jsx";
 
 
 export default function SceneComponent() {
@@ -44,7 +45,8 @@ export default function SceneComponent() {
             <Canvas>
                 <Controls/>
                 <Suspense fallback={null}>
-                    <Panorama userImage={userImage} obj={userObj} />
+                    <Panorama userImage={userImage}/>
+                    <Model obj={userObj}/>
                 </Suspense>
 
                 <ambientLight intensity={0.5}/>

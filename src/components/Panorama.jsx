@@ -1,7 +1,6 @@
-import { useMemo} from 'react';
+import { useMemo } from 'react';
 import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
-import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader.js";
 
 const backgrounds = [
     {
@@ -10,12 +9,11 @@ const backgrounds = [
     },
 ];
 
-export default function Panorama({ userImage, obj }) {
+export default function Panorama({ userImage }) {
     const url = useMemo(() => {
         return userImage || backgrounds.find(({ id }) => id === 1).url;
-    }, [userImage]);
+    }, [userImage]); // cache between rerender
     const background = useLoader(THREE.TextureLoader, url);
-    const input_obj = useLoader(OBJLoader, obj)
 
     return (
         <group>
@@ -23,8 +21,6 @@ export default function Panorama({ userImage, obj }) {
                 <sphereGeometry args={[500, 60, 40]} />
                 <meshBasicMaterial map={background} side={THREE.BackSide} />
             </mesh>
-
-            <primitive object={input_obj}/>
         </group>
     );
 }
